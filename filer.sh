@@ -4,7 +4,7 @@ while true ; do
 clear
 cols=$(tput cols)
 for ((i=0; i<cols; i++));do printf "@"; done; echo
-echo "Hello and Welcome to "THE FILER\n""
+echo "Hello and Welcome to "THE FILER""
 echo "Please carefuly select a function to execute from the options below -"
 echo "1. Rename a file"
 echo "2. Remove a file"
@@ -20,14 +20,15 @@ case $choice in
 1)
 stop="0"
 while [ $stop = "0" ]; do
- echo "Please type the name of the file you wish to rename, and press enter\n"
+ echo "Please type the name of the file you wish to rename, and press enter, to cancel, type EXIT"
  ls -Flsh
  read -r file1
- if [[ -f $file1 ]] ; then
+ if [[ $file1 == "EXIT" ]] ; then stop="1"
+ elif [[ -f $file1 ]] ; then
   echo "Rename to ?"
   read -r name1
   if [[ -f $name1 ]] ; then
-   echo "File with this name already exists, Please choose another name\n"
+   echo "File with this name already exists, Please choose another name"
   else
    mv $file1 $name1
    stop="1"
@@ -38,69 +39,77 @@ while [ $stop = "0" ]; do
 done
 ;;
 2)
-echo "enter the name for the file you wish to exterminate"
+echo "enter the name for the file you wish to exterminate, to cancel, type EXIT"
 ls -Flsh
 read -r del1
-echo "About to remove $del1, are you sure? press y to confirm"
-read -r confirm
-if [ $confirm = "y" ]; then
- rm -r $del1
- echo "File removed"
+if [ $del1 != "EXIT" ]; then
+ echo "About to remove $del1, are you sure? press y to confirm"
+ read -r confirm
+ if [ $confirm = "y" ]; then
+  rm -r $del1
+  echo "File removed"
+  read
+ else echo "File was not exterminated"
  read
-else echo "File was not exterminated"
-read
+ fi
 fi
 ;;
 3)
-echo "enter a name for the newly created file"
+echo "enter a name for the newly created file, to cancel, type EXIT"
 read -r newfile1
-if ! [[ -f $newfile1 ]] ; then
- touch $newfile1
-else echo "File with this name already exists"
- read
+if [ $newfile1 != "EXIT" ]; then
+ if ! [[ -f $newfile1 ]] ; then
+  touch $newfile1
+ else echo "File with this name already exists"
+  read
+ fi
 fi
 ls -Flsh
 read
 ;;
 4)
-echo "choose a folder to archive"
+echo "Choose a folder to archive, to cancel, type EXIT"
 ls -Flsh
 echo "Please choose a name for the new Archive you would like to create"
 read -r archive1
-echo "Please choose the folder you wish to archive"
-read -r folder1
-tar czf "$archive1".tar $folder1
-read
+if [ $archive1 != "EXIT" ]; then
+ echo "Please choose the folder you wish to archive"
+ read -r folder1
+ tar czf "$archive1".tar $folder1
+ read
+fi
 ;;
 5)
-echo "choose a file to copy"
+echo "Choose a file to copy, to cancel, type EXIT"
 ls -Flsh
 read -r copy1
-copy1=$pwd/$copy1
-stop="0"
-dest1='/'
-while [ "$stop" == "0" ]; do
- printf "\n"
- echo "$dest1"
- printf "\n"
- if [[ "$dest1" != "/" ]]; then cd $pwd/$dest1
- else cd $dest1
- fi
- ls -Flsh
- printf "\n"
- echo "Where to ? enter 'here' if here is fine. To go back, press X"
- read -r dest1
- printf "\n"
-  if [[ "$dest1" == "here" ]]; then
-  stop="1"
-  cp ~/$copy1 $pwd/$copy1
- elif [[ "$dest1" == "X" ]]; then
-  cd ..
-  dest1=$pwd
- else
-  cd $pwd/$dest1
- fi
-done
+if [ $copy1 != "EXIT" ]; then
+ copy1=$pwd/$copy1
+ stop="0"
+ dest1='/'
+ while [ "$stop" == "0" ]; do
+  printf "\n"
+  echo "$dest1"
+  printf "\n"
+  if [[ "$dest1" != "/" ]]; then cd $pwd/$dest1
+  else cd $dest1
+  fi
+  ls -Flsh
+  printf "\n"
+  echo "Where to ? enter 'here' if here is fine. To go back, press X"
+  read -r dest1
+  printf "\n"
+   if [[ "$dest1" == "here" ]]; then
+   stop="1"
+   cp ~/$copy1 $pwd/$copy1
+  elif [[ "$dest1" == "X" ]]; then
+   cd ..
+   dest1=$pwd
+  else
+   cd $pwd/$dest1
+  fi
+ done
+fi
 cd ~/
 ;;
 6)
