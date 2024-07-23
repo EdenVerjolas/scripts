@@ -13,7 +13,7 @@ else
   echo -e "\n Press any key to try again, otherwise enter 0 to exit \n"
   read -rn1 dir1
  else echo -e "\n No such directory , press any key to try again, otherwise enter 0 to exit \n"
- read -n1 dir1 && break
+ read -n1 dir1
  fi
 fi
 done
