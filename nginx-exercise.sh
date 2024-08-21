@@ -7,6 +7,7 @@ while true; do
 	echo -e "3. Print in-use ports"
 	echo -e "4. Modify ports"
 	echo -e "9. Exit"
+	echo -e "\nhttp://$(awk '/server_name/{sub(";","");print $2}' /etc/nginx/sites-enabled/default):$(awk '/listen/{sub(";"," "); print $2}' /etc/nginx/sites-enabled/default) \n"
 	read -srn1 choice1
 	case $choice1 in
 	1)
