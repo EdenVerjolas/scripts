@@ -1,0 +1,4 @@
+docker run -d -p 8001:80 -v /home/eden/nginx-html:/usr/share/nginx/html --name my-nginx nginx
+docker run -d -p 8001:80 -v /home/eden/nginx-html:/usr/share/nginx/html --name my-nginx1 nginx
+docker run -d -p 8002:80 -v /home/eden/nginx-html:/usr/share/nginx/html --name my-nginx2 nginx
+docker run -d -p 8003:80 -v /home/eden/nginx-html:/usr/share/nginx/html --name my-nginx3 nginx
