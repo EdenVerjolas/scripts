@@ -1,3 +1,7 @@
+######################################################################################
+# Bash script to read a string and check whether it is an existing user in the system
+######################################################################################
+
 #!/bin/bash
 echo "Hello, here we read a username and decide if its an existing user in this system"
 read -r name1
