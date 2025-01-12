@@ -5,7 +5,7 @@ show_menu() {
 	clear
 	last_line1=$(($(tput lines) - 1))
 	tput cup "$last_line1" 0
-	echo "(ENTER)Open (DEL)Back (C)Copy (P)Paste (M)Move (D)Delete (H)Home (F)Find (X)Exit"
+	echo "(ENTER)Open (B)Back (T)Top (L)Last (C)Copy (P)Paste (M)Move (D)Delete (H)Home (F)Find (X)Exit"
 	tput cup 0 0
 	if [[ "$(ls -Fla | wc -l)" -lt $(($(tput lines) - 5)) ]]; then
 		for i in $(seq 0 "${#file_list[@]}"); do
@@ -173,6 +173,15 @@ while true; do
 		find / -name $to_find1
 		sleep 5
 		stty -echo -icanon time 0 min 0
+		;;
+	"t")
+		current_index=0
+		;;
+	"b")
+		cd ..
+		;;
+	"l")
+		current_index="$max_index"
 		;;
 	esac
 done
